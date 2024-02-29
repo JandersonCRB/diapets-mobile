@@ -2,12 +2,16 @@ import 'package:diapets_mobile/components/DiapetsPrimaryButton/diapets_primary_b
 import 'package:diapets_mobile/components/DiapetsTextField/diapets_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+
+import 'login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.put(LoginController());
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
@@ -23,7 +27,7 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(
               height: 48,
             ),
-            const LoginForm(),
+            LoginForm(),
           ],
         ),
       ),
@@ -32,7 +36,8 @@ class LoginScreen extends StatelessWidget {
 }
 
 class LoginForm extends StatelessWidget {
-  const LoginForm({super.key});
+  LoginForm({super.key});
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   void forgotPassword(BuildContext context) {
     showDialog(
@@ -65,57 +70,70 @@ class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color primaryColor = Theme.of(context).primaryColor;
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Login",
-            style: TextStyle(
-              color: primaryColor,
-              fontSize: 32,
-              fontWeight: FontWeight.w800,
+
+    var loginController = Get.find<LoginController>();
+
+    return Form(
+      key: formKey,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Login",
+              style: TextStyle(
+                color: primaryColor,
+                fontSize: 32,
+                fontWeight: FontWeight.w800,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 36,
-          ),
-          const DiapetsTextField(
-            label: "Email",
-            placeholder: "exemplo@email.com",
-          ),
-          const SizedBox(height: 32),
-          DiapetsTextField(
-            label: "Senha",
-            placeholder: "Digite sua senha",
-            suffixIcon: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.visibility_outlined),
+            const SizedBox(
+              height: 36,
             ),
-          ),
-          const SizedBox(height: 8),
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton(
-              onPressed: () => forgotPassword(context),
-              child: Text(
-                "Esqueci minha senha?",
-                style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
+            const DiapetsTextField(
+              label: "Email",
+              placeholder: "exemplo@email.com",
+            ),
+            const SizedBox(height: 32),
+            Obx(
+              () => DiapetsTextField(
+                label: "Senha",
+                placeholder: "Digite sua senha",
+                obscureText: !loginController.displayPassword.value,
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    loginController.toggleDisplayPassword();
+                  },
+                  icon: loginController.displayPassword.value
+                      ? const Icon(Icons.visibility_off_outlined)
+                      : const Icon(Icons.visibility_outlined),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 48),
-          DiapetsPrimaryButton(
-            onPressed: () {},
-            child: const Text("Entrar"),
-          )
-        ],
+            const SizedBox(height: 8),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () => forgotPassword(context),
+                child: Text(
+                  "Esqueci minha senha?",
+                  style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 48),
+            DiapetsPrimaryButton(
+              onPressed: () {},
+              child: const Text("Entrar"),
+            )
+          ],
+        ),
       ),
     );
   }

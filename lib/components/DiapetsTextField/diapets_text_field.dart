@@ -4,10 +4,12 @@ class DiapetsTextField extends StatelessWidget {
   final String label;
   final String placeholder;
   final Widget? suffixIcon;
+  final bool obscureText;
 
   const DiapetsTextField({
     super.key,
     required this.label,
+    this.obscureText = false,
     this.placeholder = '',
     this.suffixIcon,
   });
@@ -26,8 +28,7 @@ class DiapetsTextField extends StatelessWidget {
         SizedBox(
           height: 48,
           child: TextFormField(
-            expands: true,
-            maxLines: null,
+            obscureText: obscureText,
             style: const TextStyle(
               fontSize: 14,
               color: Color(0xFFFCFCFC),
