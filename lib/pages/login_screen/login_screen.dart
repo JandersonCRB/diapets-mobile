@@ -1,5 +1,7 @@
 import 'package:diapets_mobile/components/DiapetsPrimaryButton/diapets_primary_button.dart';
 import 'package:diapets_mobile/components/DiapetsTextField/diapets_text_field.dart';
+import 'package:diapets_mobile/helpers/form_validator.dart';
+import 'package:diapets_mobile/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -67,6 +69,23 @@ class LoginForm extends StatelessWidget {
         });
   }
 
+  void login() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      var loginController = Get.find<LoginController>();
+      Api api = Get.find<Api>();
+      print(loginController.email);
+      print(loginController.password);
+      api.post('/api/v1/auth/login', data: {
+        'email': loginController.email,
+        'password': loginController.password,
+      }).then((response) {
+        print(response.statusCode);
+        print(response.data);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Color primaryColor = Theme.of(context).primaryColor;
@@ -92,9 +111,13 @@ class LoginForm extends StatelessWidget {
             const SizedBox(
               height: 36,
             ),
-            const DiapetsTextField(
+            DiapetsTextField(
               label: "Email",
               placeholder: "exemplo@email.com",
+              validator: FormValidator().required().email().build(),
+              onSaved: (value) {
+                loginController.email = value;
+              },
             ),
             const SizedBox(height: 32),
             Obx(
@@ -102,6 +125,10 @@ class LoginForm extends StatelessWidget {
                 label: "Senha",
                 placeholder: "Digite sua senha",
                 obscureText: !loginController.displayPassword.value,
+                validator: FormValidator().required().minLength(6).build(),
+                onSaved: (value) {
+                  loginController.password = value;
+                },
                 suffixIcon: IconButton(
                   onPressed: () {
                     loginController.toggleDisplayPassword();
@@ -129,7 +156,7 @@ class LoginForm extends StatelessWidget {
             ),
             const SizedBox(height: 48),
             DiapetsPrimaryButton(
-              onPressed: () {},
+              onPressed: login,
               child: const Text("Entrar"),
             )
           ],

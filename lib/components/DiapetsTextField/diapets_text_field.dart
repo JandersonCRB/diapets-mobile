@@ -5,6 +5,8 @@ class DiapetsTextField extends StatelessWidget {
   final String placeholder;
   final Widget? suffixIcon;
   final bool obscureText;
+  final String? Function(String?)? validator;
+  final void Function(String?)? onSaved;
 
   const DiapetsTextField({
     super.key,
@@ -12,6 +14,8 @@ class DiapetsTextField extends StatelessWidget {
     this.obscureText = false,
     this.placeholder = '',
     this.suffixIcon,
+    this.validator,
+    this.onSaved,
   });
 
   @override
@@ -25,44 +29,43 @@ class DiapetsTextField extends StatelessWidget {
           style: TextStyle(fontSize: 14, color: primaryColor),
         ),
         const SizedBox(height: 8),
-        SizedBox(
-          height: 48,
-          child: TextFormField(
-            obscureText: obscureText,
-            style: const TextStyle(
+        TextFormField(
+          onSaved: onSaved,
+          validator: validator,
+          obscureText: obscureText,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Color(0xFFFCFCFC),
+          ),
+          decoration: InputDecoration(
+            suffixIcon: suffixIcon == null
+                ? null
+                : Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: suffixIcon,
+                  ),
+            suffixIconColor: primaryColor,
+            hintText: placeholder,
+            hintStyle: const TextStyle(
               fontSize: 14,
-              color: Color(0xFFFCFCFC),
+              color: Color(0xFF494F59),
             ),
-            decoration: InputDecoration(
-              suffixIcon: suffixIcon == null
-                  ? null
-                  : Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: suffixIcon,
-                    ),
-              suffixIconColor: primaryColor,
-              hintText: placeholder,
-              hintStyle: const TextStyle(
-                fontSize: 14,
-                color: Color(0xFF494F59),
+            contentPadding: const EdgeInsets.only(left: 16),
+            fillColor: const Color(0xFF2E3641),
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(48),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(48),
+              borderSide: const BorderSide(
+                color: Color(0xFF888D92),
               ),
-              contentPadding: const EdgeInsets.only(left: 16),
-              fillColor: const Color(0xFF2E3641),
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(48),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(48),
-                borderSide: const BorderSide(
-                  color: Color(0xFF888D92),
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(48),
-                borderSide: BorderSide(
-                  color: primaryColor,
-                ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(48),
+              borderSide: BorderSide(
+                color: primaryColor,
               ),
             ),
           ),

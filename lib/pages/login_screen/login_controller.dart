@@ -6,4 +6,7 @@ class LoginController extends GetxController {
   void toggleDisplayPassword() {
     displayPassword.value = !displayPassword.value;
   }
+
+  String? email;
+  String? password;
 }
