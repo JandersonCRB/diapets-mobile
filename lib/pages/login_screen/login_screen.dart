@@ -1,7 +1,6 @@
 import 'package:diapets_mobile/components/DiapetsPrimaryButton/diapets_primary_button.dart';
 import 'package:diapets_mobile/components/DiapetsTextField/diapets_text_field.dart';
 import 'package:diapets_mobile/helpers/form_validator.dart';
-import 'package:diapets_mobile/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -15,22 +14,24 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(LoginController());
     return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 56,
-            ),
-            SvgPicture.asset(
-              'assets/images/pana.svg',
-              semanticsLabel: 'Mulher fazendo login',
-            ),
-            const SizedBox(
-              height: 48,
-            ),
-            LoginForm(),
-          ],
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 56,
+              ),
+              SvgPicture.asset(
+                'assets/images/pana.svg',
+                semanticsLabel: 'Mulher fazendo login',
+              ),
+              const SizedBox(
+                height: 48,
+              ),
+              LoginForm(),
+            ],
+          ),
         ),
       ),
     );
@@ -73,16 +74,7 @@ class LoginForm extends StatelessWidget {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       var loginController = Get.find<LoginController>();
-      Api api = Get.find<Api>();
-      print(loginController.email);
-      print(loginController.password);
-      api.post('/api/v1/auth/login', data: {
-        'email': loginController.email,
-        'password': loginController.password,
-      }).then((response) {
-        print(response.statusCode);
-        print(response.data);
-      });
+      loginController.login();
     }
   }
 
@@ -111,13 +103,18 @@ class LoginForm extends StatelessWidget {
             const SizedBox(
               height: 36,
             ),
-            DiapetsTextField(
-              label: "Email",
-              placeholder: "exemplo@email.com",
-              validator: FormValidator().required().email().build(),
-              onSaved: (value) {
-                loginController.email = value;
-              },
+            Obx(
+              () => DiapetsTextField(
+                label: "Email",
+                placeholder: "exemplo@email.com",
+                validator: FormValidator().required().email().build(),
+                errorText: loginController.invalidCredentials.value
+                    ? "Email ou senha incorretos"
+                    : null,
+                onSaved: (value) {
+                  loginController.email = value;
+                },
+              ),
             ),
             const SizedBox(height: 32),
             Obx(
@@ -158,7 +155,8 @@ class LoginForm extends StatelessWidget {
             DiapetsPrimaryButton(
               onPressed: login,
               child: const Text("Entrar"),
-            )
+            ),
+            const SizedBox(height: 8),
           ],
         ),
       ),

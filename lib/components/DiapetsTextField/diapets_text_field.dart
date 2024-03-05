@@ -5,6 +5,7 @@ class DiapetsTextField extends StatelessWidget {
   final String placeholder;
   final Widget? suffixIcon;
   final bool obscureText;
+  final String? errorText;
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
 
@@ -14,6 +15,7 @@ class DiapetsTextField extends StatelessWidget {
     this.obscureText = false,
     this.placeholder = '',
     this.suffixIcon,
+    this.errorText,
     this.validator,
     this.onSaved,
   });
@@ -38,6 +40,7 @@ class DiapetsTextField extends StatelessWidget {
             color: Color(0xFFFCFCFC),
           ),
           decoration: InputDecoration(
+            errorText: errorText,
             suffixIcon: suffixIcon == null
                 ? null
                 : Padding(
