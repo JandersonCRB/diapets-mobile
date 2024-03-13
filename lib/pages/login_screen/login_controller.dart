@@ -1,4 +1,6 @@
 import 'package:diapets_mobile/services/api.dart';
+import 'package:diapets_mobile/services/auth_service.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,8 +23,10 @@ class LoginController extends GetxController {
       'email': email,
       'password': password,
     }).then((response) {
-      print(response.statusCode);
       print(response.data);
+      var authService = Get.find<AuthService>();
+      authService.token = response.data['token'];
+      Get.offAllNamed('/home');
     }).catchError((error) {
       if (error.response != null) {
         if (error.response.statusCode == 401 ||
@@ -39,6 +43,6 @@ class LoginController extends GetxController {
           colorText: Colors.white,
         );
       }
-    });
+    }, test: (error) => error is DioException);
   }
 }
