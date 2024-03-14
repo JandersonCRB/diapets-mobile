@@ -1,9 +1,23 @@
 import 'package:diapets_mobile/components/DiapetsPrimaryButton/diapets_primary_button.dart';
 import 'package:diapets_mobile/pages/home_screen/home_nav_bar.dart';
+import 'package:diapets_mobile/services/pet_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    PetService petService = Get.put(PetService());
+    petService.init();
+  }
 
   @override
   Widget build(BuildContext context) {
