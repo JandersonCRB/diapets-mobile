@@ -36,6 +36,7 @@ dependencies:
   flutter_dotenv: ^5.1.0
   dio: ^5.4.1
   get_storage: ^2.1.1
+  jiffy: ^6.2.2
 
 
   # The following adds the Cupertino Icons font to your application.

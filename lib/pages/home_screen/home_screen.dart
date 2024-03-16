@@ -19,6 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
     petService.init();
   }
 
+  void gotoRegisterInsulin() {
+    Get.toNamed('/register_insulin');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,12 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 maxHeight: 40,
               ),
               child: DiapetsPrimaryButton(
+                onPressed: gotoRegisterInsulin,
                 child: const Row(
                   children: [
                     Text("Novo registro de insulina"),
                   ],
                 ),
-                onPressed: () {},
               ),
             ),
             const SizedBox(height: 32),

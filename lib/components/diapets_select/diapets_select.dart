@@ -1,29 +1,21 @@
-import 'package:diapets_mobile/components/diapets_input_decoration.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-class DiapetsTextField extends StatelessWidget {
+import '../diapets_input_decoration.dart';
+
+class DiapetsSelect<T> extends StatelessWidget {
+  final List<DropdownMenuItem<T>> items;
   final String label;
   final String placeholder;
   final Widget? suffixIcon;
-  final bool obscureText;
-  final String? errorText;
-  final bool multiline;
-  final List<TextInputFormatter> inputFormatters;
-  final String? Function(String?)? validator;
-  final void Function(String?)? onSaved;
+  final void Function(T?)? onSaved;
 
-  const DiapetsTextField({
+  const DiapetsSelect({
     super.key,
+    required this.items,
     required this.label,
-    this.obscureText = false,
     this.placeholder = '',
     this.suffixIcon,
-    this.errorText,
-    this.validator,
     this.onSaved,
-    this.multiline = false,
-    this.inputFormatters = const [],
   });
 
   @override
@@ -37,22 +29,21 @@ class DiapetsTextField extends StatelessWidget {
           style: TextStyle(fontSize: 14, color: primaryColor),
         ),
         const SizedBox(height: 8),
-        TextFormField(
-          maxLines: multiline ? 5 : 1,
+        DropdownButtonFormField<T>(
+          items: items,
           onSaved: onSaved,
-          validator: validator,
-          obscureText: obscureText,
-          inputFormatters: inputFormatters,
+          onChanged: (T? value) {},
+          value: items.first.value,
           style: const TextStyle(
             fontSize: 14,
             color: Color(0xFFFCFCFC),
           ),
           decoration: getDecoration(
             context,
-            errorText,
+            null,
             placeholder,
             suffixIcon,
-            multiline,
+            false,
           ),
         ),
       ],

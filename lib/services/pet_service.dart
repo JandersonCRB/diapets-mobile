@@ -21,6 +21,7 @@ class PetService extends GetxService {
     try {
       Api api = Get.find();
       var response = await api.get('/api/v1/pets');
+      print(response.data);
       List<Pet> pets =
           response.data.map<Pet>((pet) => Pet.fromJson(pet)).toList();
       return pets;

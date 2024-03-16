@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 class DiapetsPrimaryButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Widget child;
-  const DiapetsPrimaryButton({super.key, this.onPressed, required this.child});
+  final bool loading;
+  const DiapetsPrimaryButton({
+    super.key,
+    this.onPressed,
+    required this.child,
+    this.loading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,11 @@ class DiapetsPrimaryButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(100),
           ),
         ),
-        child: child,
+        child: loading
+            ? const CircularProgressIndicator(
+                color: Color(0xFFFCFCFC),
+              )
+            : child,
       ),
     );
   }
