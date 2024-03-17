@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       initialRoute: authService.isSignedIn ? '/home' : '/login',
+      debugShowCheckedModeBanner: false,
       getPages: [
         GetPage(
           name: '/login',
