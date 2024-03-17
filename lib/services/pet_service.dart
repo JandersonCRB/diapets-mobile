@@ -7,10 +7,10 @@ class PetService extends GetxService {
   Rxn<Pet> selectedPet = Rxn<Pet>();
 
   Future<void> init() async {
-    setInitialPet();
+    await setInitialPet();
   }
 
-  void setInitialPet() async {
+  Future<void> setInitialPet() async {
     List<Pet> pets = await listPets();
     if (pets.isNotEmpty) {
       selectedPet.value = pets.first;
@@ -21,7 +21,6 @@ class PetService extends GetxService {
     try {
       Api api = Get.find();
       var response = await api.get('/api/v1/pets');
-      print(response.data);
       List<Pet> pets =
           response.data.map<Pet>((pet) => Pet.fromJson(pet)).toList();
       return pets;

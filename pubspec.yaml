@@ -37,6 +37,8 @@ dependencies:
   dio: ^5.4.1
   get_storage: ^2.1.1
   jiffy: ^6.2.2
+  intl: ^0.19.0
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -69,6 +71,9 @@ flutter:
   assets:
     - assets/images/pana.svg
     - assets/images/logo_purple.png
+    - assets/images/time_fly.png
+    - assets/images/time_fly_red.png
+    - assets/images/calendar_insulin.png
     - .env.local
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -4,6 +4,9 @@ import 'package:diapets_mobile/services/pet_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'home_content.dart';
+import 'home_controller.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -12,15 +15,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  void initControllers() async {
+    PetService petService = Get.find();
+    HomeController homeController = Get.find();
+    await petService.init();
+    int petId = petService.selectedPet.value!.id!;
+
+    await homeController.init(petId);
+  }
+
   @override
   void initState() {
     super.initState();
-    PetService petService = Get.put(PetService());
-    petService.init();
+    Get.put(PetService());
+    Get.put(HomeController());
+    initControllers();
   }
 
   void gotoRegisterInsulin() {
-    Get.toNamed('/register_insulin');
+    PetService petService = Get.find();
+    HomeController homeController = Get.find();
+    Get.toNamed('/register_insulin')?.then((_) {
+      homeController.updateData(petService.selectedPet.value!.id!);
+    });
   }
 
   @override
@@ -32,6 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const HomeNavBar(),
+            const SizedBox(height: 32),
+            const HomeContent(),
             const Spacer(),
             ConstrainedBox(
               constraints: const BoxConstraints(

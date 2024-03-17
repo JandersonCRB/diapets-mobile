@@ -52,6 +52,11 @@ class MyApp extends StatelessWidget {
           surface: const Color(0xFFFCFCFC),
         ),
         fontFamily: GoogleFonts.inter().fontFamily,
+        // Changing default font color to white
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(color: Color(0xFFFCFCFC)),
+          bodyMedium: TextStyle(color: Color(0xFFFCFCFC)),
+        ),
         useMaterial3: true,
       ),
       home: const LoginScreen(),
