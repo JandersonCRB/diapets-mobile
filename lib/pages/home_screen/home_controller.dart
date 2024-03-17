@@ -35,22 +35,27 @@ class HomeController extends GetxController {
         response.data['last_insulin_application'],
       );
     }
-    recalculateNextInsulin();
+    startCalculationInterval();
     loading.value = false;
   }
 
-  void recalculateNextInsulin() {
+  void startCalculationInterval() {
     nextInsulinTimer?.cancel();
+    recalculateNextInsulin();
     nextInsulinTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (nextInsulin.value!.isBefore(DateTime.now())) {
-        onTime.value = false;
-      } else {
-        onTime.value = true;
-      }
-
-      var timeDiff = nextInsulin.value?.difference(DateTime.now());
-      timeLeft.value = _readableDuration(timeDiff!);
+      recalculateNextInsulin();
     });
+  }
+
+  void recalculateNextInsulin() {
+    if (nextInsulin.value!.isBefore(DateTime.now())) {
+      onTime.value = false;
+    } else {
+      onTime.value = true;
+    }
+
+    var timeDiff = nextInsulin.value?.difference(DateTime.now());
+    timeLeft.value = _readableDuration(timeDiff!);
   }
 
   String _readableDuration(Duration duration) {

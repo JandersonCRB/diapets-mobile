@@ -9,13 +9,24 @@ class HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        NextInsulinCard(),
-        SizedBox(height: 24),
-        LastInsulinCard(),
-      ],
-    );
+    HomeController homeController = Get.find();
+    return Obx(() {
+      if (homeController.loading.value) {
+        return const Expanded(
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      } else {
+        return const Column(
+          children: [
+            NextInsulinCard(),
+            SizedBox(height: 24),
+            LastInsulinCard(),
+          ],
+        );
+      }
+    });
   }
 }
 
@@ -90,16 +101,11 @@ class LastInsulinCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeController homeController = Get.find();
-    TextStyle textStyle = TextStyle(
+    TextStyle textStyle = const TextStyle(
       fontSize: 12,
       color: Color(0xFF888D92),
     );
-    String insulinUnits =
-        homeController.lastInsulinApplication.value?.insulinUnits.toString() ??
-            '';
-    String glucoseLevel =
-        homeController.lastInsulinApplication.value?.glucoseLevel.toString() ??
-            '';
+
     return HomeCard(
       child: Row(
         children: [
@@ -116,7 +122,7 @@ class LastInsulinCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "$insulinUnits unidades | $glucoseLevel glicose",
+                  "${homeController.lastInsulinApplication.value?.insulinUnits.toString() ?? ''} unidades | ${homeController.lastInsulinApplication.value?.glucoseLevel.toString() ?? ''} glicose",
                   style: textStyle,
                 ),
                 const SizedBox(height: 8),
