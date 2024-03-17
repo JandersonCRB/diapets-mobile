@@ -36,8 +36,5 @@ class RegisterInsulinController extends GetxController {
     } finally {
       loading.value = false;
     }
-
-    await Future.delayed(const Duration(seconds: 2));
-    loading.value = false;
   }
 }

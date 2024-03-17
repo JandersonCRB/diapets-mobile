@@ -1,4 +1,6 @@
+import 'package:diapets_mobile/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeNavBar extends StatelessWidget {
   const HomeNavBar({super.key});
@@ -40,7 +42,8 @@ class HomeNavBar extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            print("Home");
+            AuthService authService = Get.find();
+            authService.logout();
           },
           borderRadius: BorderRadius.circular(99),
           child: Container(

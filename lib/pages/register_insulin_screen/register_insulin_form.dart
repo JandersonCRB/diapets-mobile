@@ -3,7 +3,9 @@ import 'package:diapets_mobile/components/DiapetsTextField/diapets_text_field.da
 import 'package:diapets_mobile/components/diapets_date_picker_input/diapets_date_picker_input.dart';
 import 'package:diapets_mobile/components/diapets_select/diapets_select.dart';
 import 'package:diapets_mobile/helpers/form_validator.dart';
+import 'package:diapets_mobile/models/user.dart';
 import 'package:diapets_mobile/pages/register_insulin_screen/register_insulin_controller.dart';
+import 'package:diapets_mobile/services/auth_service.dart';
 import 'package:diapets_mobile/services/pet_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +38,27 @@ class _RegisterInsulinFormState extends State<RegisterInsulinForm> {
   @override
   Widget build(BuildContext context) {
     PetService petService = Get.find();
+    AuthService authService = Get.find();
     var registerInsulinController = Get.find<RegisterInsulinController>();
+    List<User> sortedOwners = petService.selectedPet.value!.owners;
+    print(authService.currentUser!.firstName);
+    sortedOwners.sort((a, b) {
+      // Check if a is the current user
+      if (a.id == authService.currentUser!.id) {
+        return -1; // Move a before b
+      }
+      // Check if b is the current user
+      else if (b.id == authService.currentUser!.id) {
+        return 1; // Move b before a
+      }
+      // If neither a nor b is the current user, maintain the original order
+      else {
+        return a.firstName!.compareTo(b.firstName!);
+      }
+    });
+    sortedOwners.forEach((element) {
+      print(element.firstName);
+    });
     return Form(
       key: registerInsulinController.formKey,
       child: SingleChildScrollView(
@@ -82,7 +104,7 @@ class _RegisterInsulinFormState extends State<RegisterInsulinForm> {
                     .selectedPet.value!.owners
                     .firstWhere((owner) => owner.id == value);
               },
-              items: petService.selectedPet.value!.owners.map((owner) {
+              items: sortedOwners.map((owner) {
                 return DropdownMenuItem(
                   value: owner.id,
                   child: Text(owner.firstName ?? 'Sem nome'),
