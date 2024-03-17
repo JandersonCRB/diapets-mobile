@@ -7,11 +7,6 @@ import 'package:get/get.dart';
 class Api extends DioForNative {
   void onInit() {
     options.baseUrl = dotenv.env['API_URL']!;
-    // It's will attach 'apikey' property on header from all requests
-    // httpClient.addRequestModifier((request) {
-    //   request.headers['apikey'] = '12345678';
-    //   return request;
-    // });
 
     interceptors.add(
       InterceptorsWrapper(
@@ -21,6 +16,14 @@ class Api extends DioForNative {
             options.headers['Authorization'] = 'Bearer ${authService.token}';
           }
           return handler.next(options); //continue
+        },
+        onError: (DioException e, handler) {
+          if (e.response?.statusCode == 401 &&
+              e.response?.data['error_code'] == 'INVALID_TOKEN') {
+            AuthService authService = Get.find();
+            authService.logout();
+          }
+          return handler.next(e); //continue
         },
       ),
     );
