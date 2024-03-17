@@ -22,7 +22,7 @@ class RegisterInsulinController extends GetxController {
         glucose!,
         insulinUnits!,
         responsible!.id!,
-        datetime!,
+        datetime!.toUtc(),
         observations: observation,
       );
       Get.back();
