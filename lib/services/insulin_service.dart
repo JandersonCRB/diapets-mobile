@@ -10,7 +10,7 @@ class InsulinService {
       int responsibleId, DateTime applicationTime,
       {String? observations}) async {
     Api api = Get.find();
-    api.post('/api/v1/pets/$petId/insulin_applications', data: {
+    await api.post('/api/v1/pets/$petId/insulin_applications', data: {
       'glucose_level': glucoseLevel,
       'insulin_units': insulinUnits,
       'application_time': applicationTime.toIso8601String(),
