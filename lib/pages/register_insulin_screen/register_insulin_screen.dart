@@ -7,15 +7,20 @@ class RegisterInsulinScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(top: 24, left: 24, right: 24),
-        child: Column(
-          children: [
-            PageNavbar(title: 'Novo registro'),
-            SizedBox(height: 48),
-            RegisterInsulinForm(),
-          ],
+    return const SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(top: 24, left: 24, right: 24),
+            child: Column(
+              children: [
+                PageNavbar(title: 'Novo registro'),
+                SizedBox(height: 48),
+                RegisterInsulinForm(),
+                SizedBox(height: 16),
+              ],
+            ),
+          ),
         ),
       ),
     );
