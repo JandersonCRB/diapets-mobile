@@ -18,10 +18,11 @@ class Api extends DioForNative {
           return handler.next(options); //continue
         },
         onError: (DioException e, handler) {
+          print("Error: ${e.response?.data}");
           if (e.response?.statusCode == 401 &&
               e.response?.data['error_code'] == 'INVALID_TOKEN') {
             AuthService authService = Get.find();
-            authService.logout();
+            authService.logout(redirect: false);
           }
           return handler.next(e); //continue
         },

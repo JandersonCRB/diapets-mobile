@@ -20,17 +20,29 @@ class AuthService extends GetxController {
 
   get isSignedIn => _token != null;
 
-  void logout() {
+  void logout({bool redirect = true}) {
     token = null;
-    Get.offAllNamed('/login');
+    if (redirect) {
+      Get.offAllNamed('/login');
+    }
   }
 
   Future<AuthService> init() async {
     _token = GetStorage().read('token');
-    Api api = Get.find();
+    if (_token != null) {
+      await getCurrentUser();
+    }
 
-    var response = await api.get('/api/v1/auth/user');
-    currentUser = User.fromJson(response.data);
     return this;
+  }
+
+  Future<void> getCurrentUser() async {
+    Api api = Get.find();
+    try {
+      var response = await api.get('/api/v1/auth/user');
+      currentUser = User.fromJson(response.data);
+    } catch (e) {
+      print(e);
+    }
   }
 }
