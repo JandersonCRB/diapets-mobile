@@ -1,3 +1,4 @@
+import 'package:diapets_mobile/models/user.dart';
 import 'package:diapets_mobile/services/api.dart';
 import 'package:diapets_mobile/services/auth_service.dart';
 import 'package:dio/dio.dart';
@@ -26,6 +27,7 @@ class LoginController extends GetxController {
       print(response.data);
       var authService = Get.find<AuthService>();
       authService.token = response.data['token'];
+      authService.currentUser = User.fromJson(response.data['user']);
       Get.offAllNamed('/home');
     }).catchError((error) {
       if (error.response != null) {

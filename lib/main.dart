@@ -19,7 +19,8 @@ Future<void> initServices() async {
   await dotenv.load(fileName: ".env.local");
   Get.put(Api()).onInit();
   await GetStorage.init();
-  await Get.putAsync(() => AuthService().init());
+  var authService = Get.put(AuthService());
+  await authService.init();
   await Jiffy.setLocale('pt_br');
 }
 
@@ -39,7 +40,10 @@ class MyApp extends StatelessWidget {
           name: '/login',
           page: () => const LoginScreen(),
         ),
-        GetPage(name: '/home', page: () => const HomeScreen()),
+        GetPage(
+          name: '/home',
+          page: () => const HomeScreen(),
+        ),
         GetPage(
           name: '/register_insulin',
           page: () => const RegisterInsulinScreen(),
