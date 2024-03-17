@@ -1,5 +1,6 @@
 import 'package:diapets_mobile/components/DiapetsPrimaryButton/diapets_primary_button.dart';
 import 'package:diapets_mobile/components/DiapetsTextField/diapets_text_field.dart';
+import 'package:diapets_mobile/components/system_ui_customization.dart';
 import 'package:diapets_mobile/helpers/form_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,24 +14,26 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(LoginController());
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 56,
-              ),
-              SvgPicture.asset(
-                'assets/images/pana.svg',
-                semanticsLabel: 'Mulher fazendo login',
-              ),
-              const SizedBox(
-                height: 48,
-              ),
-              LoginForm(),
-            ],
+    return SystemUiCustomization(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: SizedBox(
+            width: double.infinity,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 56,
+                ),
+                SvgPicture.asset(
+                  'assets/images/pana.svg',
+                  semanticsLabel: 'Mulher fazendo login',
+                ),
+                const SizedBox(
+                  height: 48,
+                ),
+                LoginForm(),
+              ],
+            ),
           ),
         ),
       ),
