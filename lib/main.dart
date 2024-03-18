@@ -1,4 +1,6 @@
 import 'package:diapets_mobile/pages/home_screen/home_screen.dart';
+import 'package:diapets_mobile/pages/insulin_log_screen/insulin_log_controller.dart';
+import 'package:diapets_mobile/pages/insulin_log_screen/insulin_log_screen.dart';
 import 'package:diapets_mobile/pages/login_screen/login_screen.dart';
 import 'package:diapets_mobile/pages/register_insulin_screen/register_insulin_screen.dart';
 import 'package:diapets_mobile/services/api.dart';
@@ -43,6 +45,15 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/home',
           page: () => const HomeScreen(),
+          children: [
+            GetPage(
+              name: '/insulin_log',
+              binding: BindingsBuilder(() {
+                Get.put(InsulinLogController());
+              }),
+              page: () => const InsulinLogScreen(),
+            ),
+          ],
         ),
         GetPage(
           name: '/register_insulin',

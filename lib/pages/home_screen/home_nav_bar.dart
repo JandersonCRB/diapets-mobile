@@ -18,7 +18,7 @@ class HomeNavBar extends StatelessWidget {
         const Spacer(),
         InkWell(
           onTap: () {
-            print("Home");
+            Get.toNamed('/home/insulin_log');
           },
           borderRadius: BorderRadius.circular(99),
           child: Container(

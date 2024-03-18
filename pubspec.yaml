@@ -38,7 +38,7 @@ dependencies:
   get_storage: ^2.1.1
   jiffy: ^6.2.2
   intl: ^0.19.0
-
+  timelines: ^0.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
