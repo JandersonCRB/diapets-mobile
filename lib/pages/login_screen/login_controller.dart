@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
+  var submitting = false.obs;
   var displayPassword = false.obs;
 
   void toggleDisplayPassword() {
@@ -19,7 +20,7 @@ class LoginController extends GetxController {
 
   void login() {
     Api api = Get.find<Api>();
-
+    submitting.value = true;
     api.post('/api/v1/auth/login', data: {
       'email': email,
       'password': password,
@@ -29,22 +30,27 @@ class LoginController extends GetxController {
       authService.token = response.data['token'];
       authService.currentUser = User.fromJson(response.data['user']);
       Get.offAllNamed('/home');
-    }).catchError((error) {
-      if (error.response != null) {
-        if (error.response.statusCode == 401 ||
-            error.response.statusCode == 404) {
-          invalidCredentials.value = true;
+    }).catchError(
+      (error) {
+        if (error.response != null) {
+          if (error.response.statusCode == 401 ||
+              error.response.statusCode == 404) {
+            invalidCredentials.value = true;
+          }
+        } else {
+          Get.snackbar(
+            "Sem conexão",
+            "Você está sem conexão com a internet",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            margin: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+            colorText: Colors.white,
+          );
         }
-      } else {
-        Get.snackbar(
-          "Sem conexão",
-          "Você está sem conexão com a internet",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          margin: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
-          colorText: Colors.white,
-        );
-      }
-    }, test: (error) => error is DioException);
+      },
+      test: (error) => error is DioException,
+    ).whenComplete(() {
+      submitting.value = false;
+    });
   }
 }

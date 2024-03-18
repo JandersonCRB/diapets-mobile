@@ -155,9 +155,12 @@ class LoginForm extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 48),
-            DiapetsPrimaryButton(
-              onPressed: login,
-              child: const Text("Entrar"),
+            Obx(
+              () => DiapetsPrimaryButton(
+                onPressed: login,
+                loading: loginController.submitting.value,
+                child: const Text("Entrar"),
+              ),
             ),
             const SizedBox(height: 8),
           ],
