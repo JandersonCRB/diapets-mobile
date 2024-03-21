@@ -5,6 +5,9 @@ import 'package:diapets_mobile/pages/login_screen/login_screen.dart';
 import 'package:diapets_mobile/pages/register_insulin_screen/register_insulin_screen.dart';
 import 'package:diapets_mobile/services/api.dart';
 import 'package:diapets_mobile/services/auth_service.dart';
+import 'package:diapets_mobile/services/push_notifications_service.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -12,9 +15,20 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jiffy/jiffy.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
   await initServices();
   runApp(const MyApp());
+}
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+
+  print("Handling a background message: ${message.messageId}");
 }
 
 Future<void> initServices() async {
@@ -24,6 +38,13 @@ Future<void> initServices() async {
   var authService = Get.put(AuthService());
   await authService.init();
   await Jiffy.setLocale('pt_br');
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  var pushNotificationsService = Get.put(PushNotificationsService());
+  await pushNotificationsService.init();
 }
 
 class MyApp extends StatelessWidget {

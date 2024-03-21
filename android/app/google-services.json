@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "914226878912",
+    "project_id": "diapets",
+    "storage_bucket": "diapets.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914226878912:android:431f0e4567982763fb5025",
+        "android_client_info": {
+          "package_name": "com.example.diapets_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVXcVdqBNQzbSgXGcdK2icZsclgB80zqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 import 'package:diapets_mobile/models/user.dart';
 import 'package:diapets_mobile/services/api.dart';
+import 'package:diapets_mobile/services/push_notifications_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -20,6 +21,17 @@ class AuthService extends GetxController {
 
   get isSignedIn => _token != null;
 
+  login(String token, User user) {
+    this.token = token;
+    currentUser = user;
+    updatePushTokens();
+  }
+
+  updatePushTokens() {
+    var pushNotificationsService = Get.find<PushNotificationsService>();
+    pushNotificationsService.getAndUpdateToken();
+  }
+
   void logout({bool redirect = true}) {
     token = null;
     if (redirect) {
@@ -30,13 +42,17 @@ class AuthService extends GetxController {
   Future<AuthService> init() async {
     _token = GetStorage().read('token');
     if (_token != null) {
-      await getCurrentUser();
+      await afterSignIn();
     }
 
     return this;
   }
 
-  Future<void> getCurrentUser() async {
+  afterSignIn() async {
+    await getCurrentUser();
+  }
+
+  getCurrentUser() async {
     Api api = Get.find();
     try {
       var response = await api.get('/api/v1/auth/user');

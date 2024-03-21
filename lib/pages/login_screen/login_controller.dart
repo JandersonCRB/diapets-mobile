@@ -25,10 +25,10 @@ class LoginController extends GetxController {
       'email': email,
       'password': password,
     }).then((response) {
-      print(response.data);
       var authService = Get.find<AuthService>();
-      authService.token = response.data['token'];
-      authService.currentUser = User.fromJson(response.data['user']);
+      String token = response.data['token'];
+      User user = User.fromJson(response.data['user']);
+      authService.login(token, user);
       Get.offAllNamed('/home');
     }).catchError(
       (error) {
