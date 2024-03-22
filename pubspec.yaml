@@ -76,6 +76,7 @@ flutter:
     - assets/images/time_fly.png
     - assets/images/time_fly_red.png
     - assets/images/calendar_insulin.png
+    - assets/icons/injection.svg
     - .env.local
 
   # An image asset can refer to one or more resolution-specific "variants", see

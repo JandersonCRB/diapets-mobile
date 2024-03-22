@@ -1,4 +1,5 @@
 import 'package:diapets_mobile/components/DiapetsPrimaryButton/diapets_primary_button.dart';
+import 'package:diapets_mobile/components/icons/injection_icon.dart';
 import 'package:diapets_mobile/components/system_ui_customization.dart';
 import 'package:diapets_mobile/pages/home_screen/home_nav_bar.dart';
 import 'package:diapets_mobile/services/pet_service.dart';
@@ -57,14 +58,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 const Spacer(),
                 ConstrainedBox(
                   constraints: const BoxConstraints(
-                    maxWidth: 220,
+                    maxWidth: 250,
                     maxHeight: 40,
                   ),
                   child: DiapetsPrimaryButton(
                     onPressed: gotoRegisterInsulin,
                     child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Novo registro de insulina"),
+                        InjectionIcon(),
+                        SizedBox(width: 8),
+                        Text(
+                          "Novo registro de insulina",
+                          style: TextStyle(fontSize: 14),
+                        ),
                       ],
                     ),
                   ),
