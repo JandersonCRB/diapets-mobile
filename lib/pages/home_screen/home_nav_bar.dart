@@ -2,6 +2,7 @@ import 'package:diapets_mobile/pages/home_screen/home_controller.dart';
 import 'package:diapets_mobile/services/auth_service.dart';
 import 'package:diapets_mobile/services/pet_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class HomeNavBar extends StatelessWidget {
@@ -21,8 +22,8 @@ class HomeNavBar extends StatelessWidget {
     var primaryColor = Theme.of(context).primaryColor;
     return Row(
       children: [
-        Image.asset(
-          "assets/images/logo_purple.png",
+        SvgPicture.asset(
+          "assets/images/logo_purple.svg",
           width: 106,
           height: 32,
         ),

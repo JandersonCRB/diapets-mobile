@@ -2,6 +2,7 @@ import 'package:diapets_mobile/pages/home_screen/home_card.dart';
 import 'package:diapets_mobile/pages/home_screen/home_controller.dart';
 import 'package:diapets_mobile/services/date_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class HomeContent extends StatelessWidget {
@@ -82,10 +83,10 @@ class NextInsulinCard extends StatelessWidget {
             const Spacer(),
             SizedBox(
               width: 110,
-              child: Image.asset(
+              child: SvgPicture.asset(
                 homeController.onTime.value
-                    ? "assets/images/time_fly.png"
-                    : "assets/images/time_fly_red.png",
+                    ? "assets/images/time_fly.svg"
+                    : "assets/images/time_fly_red.svg",
               ),
             ),
           ],
@@ -148,7 +149,7 @@ class LastInsulinCard extends StatelessWidget {
           const Spacer(),
           SizedBox(
             width: 110,
-            child: Image.asset("assets/images/calendar_insulin.png"),
+            child: SvgPicture.asset("assets/images/calendar_insulin.svg"),
           ),
         ],
       ),
