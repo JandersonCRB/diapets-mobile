@@ -41,7 +41,7 @@ class _RegisterInsulinFormState extends State<RegisterInsulinForm> {
     AuthService authService = Get.find();
     var registerInsulinController = Get.find<RegisterInsulinController>();
     List<User> sortedOwners = petService.selectedPet.value!.owners;
-    print(authService.currentUser!.firstName);
+
     sortedOwners.sort((a, b) {
       // Check if a is the current user
       if (a.id == authService.currentUser!.id) {
@@ -56,9 +56,7 @@ class _RegisterInsulinFormState extends State<RegisterInsulinForm> {
         return a.firstName!.compareTo(b.firstName!);
       }
     });
-    sortedOwners.forEach((element) {
-      print(element.firstName);
-    });
+
     return Form(
       key: registerInsulinController.formKey,
       child: SingleChildScrollView(
@@ -114,6 +112,8 @@ class _RegisterInsulinFormState extends State<RegisterInsulinForm> {
             const SizedBox(height: 32),
             DiapetsDatePickerInput(
                 label: "Data e hora",
+                firstDate: DateTime(2000),
+                lastDate: DateTime.now(),
                 onSaved: (DateTime? value) {
                   registerInsulinController.datetime = value;
                 }),
