@@ -1,9 +1,20 @@
+import 'package:diapets_mobile/pages/home_screen/home_controller.dart';
 import 'package:diapets_mobile/services/auth_service.dart';
+import 'package:diapets_mobile/services/pet_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeNavBar extends StatelessWidget {
   const HomeNavBar({super.key});
+
+  goToInsulinLog() {
+    Get.toNamed('/home/insulin_log')?.then((_) {
+      PetService petService = Get.find();
+      HomeController homeController = Get.find();
+
+      homeController.updateData(petService.selectedPet.value!.id!);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +28,7 @@ class HomeNavBar extends StatelessWidget {
         ),
         const Spacer(),
         InkWell(
-          onTap: () {
-            Get.toNamed('/home/insulin_log');
-          },
+          onTap: goToInsulinLog,
           borderRadius: BorderRadius.circular(99),
           child: Container(
             decoration: BoxDecoration(
