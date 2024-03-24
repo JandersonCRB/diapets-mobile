@@ -70,6 +70,17 @@ class InsulinCard extends StatelessWidget {
                 fontSize: 12,
               ),
             ),
+            if (insulinApplication.observations != null &&
+                insulinApplication.observations!.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Text(
+                "Obs: ${insulinApplication.observations}",
+                style: const TextStyle(
+                  color: Color(0xFF888D92),
+                  fontSize: 12,
+                ),
+              ),
+            ],
           ],
         ),
       ),

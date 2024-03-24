@@ -1,10 +1,15 @@
 import 'package:diapets_mobile/models/insulin_application.dart';
+import 'package:diapets_mobile/models/insulin_application_filters.dart';
 import 'package:diapets_mobile/services/api.dart';
 import 'package:diapets_mobile/services/pet_service.dart';
 import 'package:get/get.dart';
 
 class InsulinLogController extends GetxController {
   var loading = true.obs;
+  var loadingFilters = true.obs;
+
+  Rxn<InsulinApplicationFilters> insulinApplicationFilters =
+      Rxn<InsulinApplicationFilters>();
 
   // key = "yyyy-MM'
   // value is a list of days in the month 'MM-dd'
@@ -18,9 +23,28 @@ class InsulinLogController extends GetxController {
   void onInit() async {
     super.onInit();
     try {
+      await getInsulinFilters();
       await getInsulinLog();
     } finally {
       loading.value = false;
+    }
+  }
+
+  getInsulinFilters() async {
+    Api api = Get.find<Api>();
+    PetService petService = Get.find<PetService>();
+    loadingFilters.value = true;
+    try {
+      var response = await api.get(
+          "/api/v1/pets/${petService.selectedPet.value!.id}/insulin_applications/filters");
+      insulinApplicationFilters.value =
+          InsulinApplicationFilters.fromJson(response.data);
+      print(insulinApplicationFilters.toJson());
+    } catch (e) {
+      Get.snackbar('Erro', 'Erro ao carregar filtros');
+      print(e);
+    } finally {
+      loadingFilters.value = false;
     }
   }
 

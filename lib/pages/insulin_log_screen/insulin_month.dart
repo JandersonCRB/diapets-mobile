@@ -1,9 +1,10 @@
 import 'package:diapets_mobile/models/insulin_application.dart';
 import 'package:diapets_mobile/pages/insulin_log_screen/insulin_day.dart';
+import 'package:diapets_mobile/services/date_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:timelines/timelines.dart';
 
 import 'insulin_log_controller.dart';
 
@@ -44,55 +45,38 @@ class InsulinMonth extends StatelessWidget {
             String dayKey = days[index];
             List<InsulinApplication> insulinApplications =
                 insulinLogController.dayMap[dayKey]!;
-            return MonthTimelineTile(
-              insulinApplications: insulinApplications,
-              dayKey: dayKey,
+            return Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      DateService.humanReadableDate(
+                              DateFormat("MM-dd").parse(dayKey),
+                              customDayMonthPattern: "dd MMM")
+                          .split(" ")
+                          .map((e) => e.capitalizeFirst!)
+                          .join(" "),
+                      style: const TextStyle(
+                        color: Color(0xFF888D92),
+                      ),
+                    ),
+                    const Expanded(
+                      child: Divider(
+                        color: Color(0xFF494F59),
+                        indent: 8,
+                        endIndent: 8,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                InsulinDay(insulinApplications: insulinApplications),
+                const SizedBox(height: 16),
+              ],
             );
           },
         ),
       ],
-    );
-  }
-}
-
-class MonthTimelineTile extends StatelessWidget {
-  final String dayKey;
-  final List<InsulinApplication> insulinApplications;
-  const MonthTimelineTile({
-    super.key,
-    required this.insulinApplications,
-    required this.dayKey,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TimelineTile(
-      nodePosition: 0.17,
-      oppositeContents: Container(
-        padding: const EdgeInsets.all(8),
-        child: Text(
-          dayKey.split('-').map((e) => e.padLeft(2, '0')).join('/'),
-          style: const TextStyle(
-            color: Color(0xFF888D92),
-          ),
-        ),
-      ),
-      contents: Padding(
-        padding: const EdgeInsets.all(8),
-        child: InsulinDay(insulinApplications: insulinApplications),
-      ),
-      node: const TimelineNode(
-        indicator: DotIndicator(
-          color: Color(0xFF494F59),
-          size: 12,
-        ),
-        startConnector: SolidLineConnector(
-          color: Color(0xFF494F59),
-        ),
-        endConnector: SolidLineConnector(
-          color: Color(0xFF494F59),
-        ),
-      ),
     );
   }
 }
