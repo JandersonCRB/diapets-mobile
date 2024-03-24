@@ -1,18 +1,29 @@
+import 'package:diapets_mobile/components/diapets_icon_button/diapets_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PageNavbar extends StatelessWidget {
   final String title;
+  final List<Widget>? actions;
+
   const PageNavbar({
     super.key,
     this.title = '',
+    this.actions,
   });
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const BackButton(),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const BackButton(),
+            const Spacer(),
+            ...?actions,
+          ],
+        ),
         SizedBox(
           height: 40,
           child: Row(
@@ -40,26 +51,14 @@ class BackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return DiapetsIconButton(
+      icon: const Icon(
+        Icons.keyboard_backspace_rounded,
+        weight: 300,
+      ),
       onTap: () {
         Get.back();
       },
-      borderRadius: BorderRadius.circular(99),
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFF2E3641),
-          borderRadius: BorderRadius.circular(99),
-        ),
-        width: 40,
-        height: 40,
-        padding: const EdgeInsets.all(8),
-        alignment: Alignment.center,
-        child: const Icon(
-          Icons.keyboard_backspace,
-          size: 24,
-          color: Color(0xFFFCFCFC),
-        ),
-      ),
     );
   }
 }
