@@ -51,6 +51,7 @@ class InsulinCard extends StatelessWidget {
                   insulinApplication.user!.firstName!,
                   style: const TextStyle(
                     color: Color(0xFF9B6BF3),
+                    fontSize: 16,
                   ),
                 ),
                 Text(
@@ -58,6 +59,7 @@ class InsulinCard extends StatelessWidget {
                       .Hm,
                   style: const TextStyle(
                     color: Color(0xFF888D92),
+                    fontSize: 14,
                   ),
                 ),
               ],
@@ -67,7 +69,7 @@ class InsulinCard extends StatelessWidget {
               "${insulinApplication.insulinUnits!} unidades | ${insulinApplication.glucoseLevel} glicose",
               style: const TextStyle(
                 color: Color(0xFF888D92),
-                fontSize: 12,
+                fontSize: 14,
               ),
             ),
             if (insulinApplication.observations != null &&
@@ -77,7 +79,7 @@ class InsulinCard extends StatelessWidget {
                 "Obs: ${insulinApplication.observations}",
                 style: const TextStyle(
                   color: Color(0xFF888D92),
-                  fontSize: 12,
+                  fontSize: 14,
                 ),
               ),
             ],
