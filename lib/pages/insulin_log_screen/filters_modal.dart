@@ -45,7 +45,7 @@ class FiltersModal extends StatelessWidget {
               const Text(
                 'Em breve...',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Color(0xFFADAFBF),
                   fontSize: 16,
                 ),
               ),
