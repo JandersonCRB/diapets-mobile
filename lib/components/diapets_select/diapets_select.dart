@@ -7,6 +7,7 @@ class DiapetsSelect<T> extends StatelessWidget {
   final String label;
   final String placeholder;
   final Widget? suffixIcon;
+  final bool Function(T)? initialValue;
   final void Function(T?)? onSaved;
 
   const DiapetsSelect({
@@ -16,11 +17,18 @@ class DiapetsSelect<T> extends StatelessWidget {
     this.placeholder = '',
     this.suffixIcon,
     this.onSaved,
+    this.initialValue,
   });
 
   @override
   Widget build(BuildContext context) {
     var primaryColor = Theme.of(context).colorScheme.primary;
+    T initial = items.first.value as T;
+    if (initialValue != null) {
+      initial = items
+          .firstWhere((DropdownMenuItem<T> e) => initialValue!(e.value as T))
+          .value as T;
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -33,7 +41,7 @@ class DiapetsSelect<T> extends StatelessWidget {
           items: items,
           onSaved: onSaved,
           onChanged: (T? value) {},
-          value: items.first.value,
+          value: initial,
           style: const TextStyle(
             fontSize: 14,
             color: Color(0xFFFCFCFC),

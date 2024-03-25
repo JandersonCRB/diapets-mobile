@@ -53,6 +53,11 @@ class InsulinLogController extends GetxController {
     PetService petService = Get.find<PetService>();
     var response = await api.get(
         '/api/v1/pets/${petService.selectedPet.value!.id}/insulin_applications');
+
+    monthList.clear();
+    monthMap.clear();
+    dayMap.clear();
+
     List<InsulinApplication> insulinApplications =
         response.data.map<InsulinApplication>((e) {
       return InsulinApplication.fromJson(e);

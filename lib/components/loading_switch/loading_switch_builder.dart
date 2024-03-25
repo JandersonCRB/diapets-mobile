@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LoadingSwitch extends StatelessWidget {
+class LoadingSwitchBuilder extends StatelessWidget {
   final bool isLoading;
-  final Widget child;
-  const LoadingSwitch({
+
+  final Widget Function() builder;
+  const LoadingSwitchBuilder({
     super.key,
     required this.isLoading,
-    required this.child,
+    required this.builder,
   });
 
   @override
@@ -18,6 +19,6 @@ class LoadingSwitch extends StatelessWidget {
         ),
       );
     }
-    return child;
+    return builder();
   }
 }

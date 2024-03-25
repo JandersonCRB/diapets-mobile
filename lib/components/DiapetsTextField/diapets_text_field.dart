@@ -9,6 +9,7 @@ class DiapetsTextField extends StatelessWidget {
   final bool obscureText;
   final String? errorText;
   final bool multiline;
+  final String? initialValue;
   final List<TextInputFormatter> inputFormatters;
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
@@ -23,6 +24,7 @@ class DiapetsTextField extends StatelessWidget {
     this.validator,
     this.onSaved,
     this.multiline = false,
+    this.initialValue,
     this.inputFormatters = const [],
   });
 
@@ -38,6 +40,7 @@ class DiapetsTextField extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextFormField(
+          initialValue: initialValue,
           maxLines: multiline ? 5 : 1,
           onSaved: onSaved,
           validator: validator,

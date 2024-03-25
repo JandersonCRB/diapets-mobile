@@ -11,11 +11,12 @@ class DiapetsDatePickerInput extends StatefulWidget {
   final String? errorText;
   final DateTime firstDate;
   final DateTime lastDate;
+  final DateTime? initialDate;
 
   final String? Function(String?)? validator;
   final void Function(DateTime?)? onSaved;
 
-  DiapetsDatePickerInput({
+  const DiapetsDatePickerInput({
     super.key,
     required this.label,
     this.placeholder = '',
@@ -25,6 +26,7 @@ class DiapetsDatePickerInput extends StatefulWidget {
     this.onSaved,
     required this.firstDate,
     required this.lastDate,
+    this.initialDate,
   });
 
   @override
@@ -35,7 +37,10 @@ class _DiapetsDatePickerInputState extends State<DiapetsDatePickerInput> {
   @override
   void initState() {
     super.initState();
-    Get.put(DiapetsDatePickerController());
+    var diapetsDatePickerController = Get.put(DiapetsDatePickerController());
+    if (widget.initialDate != null) {
+      diapetsDatePickerController.selectedDate.value = widget.initialDate!;
+    }
   }
 
   void openDatePicker(BuildContext context) {

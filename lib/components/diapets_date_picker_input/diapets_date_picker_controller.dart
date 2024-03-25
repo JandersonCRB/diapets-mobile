@@ -7,7 +7,6 @@ class DiapetsDatePickerController extends GetxController {
   final TextEditingController textEditingController = TextEditingController();
 
   void init() {
-    print("inited");
     textEditingController.text = selectedDateFormatted;
     selectedDate.listen((DateTime? date) {
       date ??= DateTime.now();

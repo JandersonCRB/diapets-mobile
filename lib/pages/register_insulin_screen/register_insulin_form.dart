@@ -2,6 +2,7 @@ import 'package:diapets_mobile/components/DiapetsPrimaryButton/diapets_primary_b
 import 'package:diapets_mobile/components/DiapetsTextField/diapets_text_field.dart';
 import 'package:diapets_mobile/components/diapets_date_picker_input/diapets_date_picker_input.dart';
 import 'package:diapets_mobile/components/diapets_select/diapets_select.dart';
+import 'package:diapets_mobile/components/loading_switch/loading_switch_builder.dart';
 import 'package:diapets_mobile/helpers/form_validator.dart';
 import 'package:diapets_mobile/models/user.dart';
 import 'package:diapets_mobile/pages/register_insulin_screen/register_insulin_controller.dart';
@@ -22,7 +23,6 @@ class _RegisterInsulinFormState extends State<RegisterInsulinForm> {
   @override
   void initState() {
     super.initState();
-    Get.put(RegisterInsulinController());
   }
 
   void submit() {
@@ -59,81 +59,105 @@ class _RegisterInsulinFormState extends State<RegisterInsulinForm> {
 
     return Form(
       key: registerInsulinController.formKey,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
+      child: Obx(
+        () => LoadingSwitchBuilder(
+          isLoading: registerInsulinController.initialLoading.value,
+          builder: () => SingleChildScrollView(
+            child: Column(
               children: [
-                Expanded(
-                  child: DiapetsTextField(
-                    label: "Glicose",
-                    placeholder: "mg/dL",
-                    validator: FormValidator().required().build(),
-                    onSaved: (String? value) {
-                      registerInsulinController.glucose = int.parse(value!);
-                    },
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: DiapetsTextField(
+                        initialValue: registerInsulinController
+                            .insulinApplication.value?.glucoseLevel
+                            .toString(),
+                        label: "Glicose",
+                        placeholder: "mg/dL",
+                        validator: FormValidator().required().build(),
+                        onSaved: (String? value) {
+                          registerInsulinController.glucose = int.parse(value!);
+                        },
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: DiapetsTextField(
+                        initialValue: registerInsulinController
+                            .insulinApplication.value?.insulinUnits
+                            .toString(),
+                        label: "Unid. de insulina",
+                        placeholder: "unidades",
+                        validator: FormValidator().required().build(),
+                        onSaved: (String? value) {
+                          registerInsulinController.insulinUnits =
+                              int.parse(value!);
+                        },
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: DiapetsTextField(
-                    label: "Unid. de insulina",
-                    placeholder: "unidades",
-                    validator: FormValidator().required().build(),
-                    onSaved: (String? value) {
-                      registerInsulinController.insulinUnits =
-                          int.parse(value!);
-                    },
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                  ),
+                const SizedBox(height: 32),
+                DiapetsSelect<int>(
+                  label: "Responsável",
+                  initialValue: registerInsulinController
+                              .insulinApplication.value?.user?.id !=
+                          null
+                      ? (int value) {
+                          return value ==
+                              registerInsulinController
+                                  .insulinApplication.value?.user?.id;
+                        }
+                      : null,
+                  onSaved: (int? value) {
+                    registerInsulinController.responsible = petService
+                        .selectedPet.value!.owners
+                        .firstWhere((owner) => owner.id == value);
+                  },
+                  items: sortedOwners.map((owner) {
+                    return DropdownMenuItem(
+                      value: owner.id,
+                      child: Text(owner.firstName ?? 'Sem nome'),
+                    );
+                  }).toList(),
                 ),
+                const SizedBox(height: 32),
+                DiapetsDatePickerInput(
+                    label: "Data e hora",
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime.now(),
+                    initialDate: registerInsulinController
+                        .insulinApplication.value?.applicationTime,
+                    onSaved: (DateTime? value) {
+                      registerInsulinController.datetime = value;
+                    }),
+                const SizedBox(height: 32),
+                DiapetsTextField(
+                  onSaved: (String? value) {
+                    registerInsulinController.observation = value;
+                  },
+                  initialValue: registerInsulinController
+                      .insulinApplication.value?.observations,
+                  label: "Observações (opcional)",
+                  multiline: true,
+                ),
+                const SizedBox(height: 64),
+                Obx(
+                  () => DiapetsPrimaryButton(
+                    onPressed: submit,
+                    loading: registerInsulinController.loading.value,
+                    child: const Text("Salvar registro"),
+                  ),
+                )
               ],
             ),
-            const SizedBox(height: 32),
-            DiapetsSelect<int>(
-              label: "Responsável",
-              onSaved: (int? value) {
-                registerInsulinController.responsible = petService
-                    .selectedPet.value!.owners
-                    .firstWhere((owner) => owner.id == value);
-              },
-              items: sortedOwners.map((owner) {
-                return DropdownMenuItem(
-                  value: owner.id,
-                  child: Text(owner.firstName ?? 'Sem nome'),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 32),
-            DiapetsDatePickerInput(
-                label: "Data e hora",
-                firstDate: DateTime(2000),
-                lastDate: DateTime.now(),
-                onSaved: (DateTime? value) {
-                  registerInsulinController.datetime = value;
-                }),
-            const SizedBox(height: 32),
-            DiapetsTextField(
-              onSaved: (String? value) {
-                registerInsulinController.observation = value;
-              },
-              label: "Observações (opcional)",
-              multiline: true,
-            ),
-            const SizedBox(height: 64),
-            Obx(
-              () => DiapetsPrimaryButton(
-                onPressed: submit,
-                loading: registerInsulinController.loading.value,
-                child: const Text("Salvar registro"),
-              ),
-            )
-          ],
+          ),
         ),
       ),
     );
