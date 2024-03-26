@@ -101,6 +101,16 @@ class MyApp extends StatelessWidget {
           primary: const Color(0xFFEB7C3C),
           background: const Color(0xFF1F2630),
           surface: const Color(0xFFFCFCFC),
+          error: Color(0xFFEF3D36),
+        ),
+        dialogTheme: const DialogTheme(
+          backgroundColor: Color(0xFF2E3641),
+          surfaceTintColor: Colors.transparent,
+          titleTextStyle: TextStyle(
+            color: Color(0xFFEB7C3C),
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
+          ),
         ),
         fontFamily: GoogleFonts.inter().fontFamily,
         // Changing default font color to white

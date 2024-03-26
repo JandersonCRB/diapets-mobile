@@ -10,6 +10,7 @@ class RegisterInsulinController extends GetxController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   var loading = false.obs;
   var initialLoading = false.obs;
+  var deleteLoading = false.obs;
 
   Rxn<InsulinApplication> insulinApplication = Rxn<InsulinApplication>();
   var isEditing = false.obs;
@@ -83,6 +84,24 @@ class RegisterInsulinController extends GetxController {
       );
     } finally {
       loading.value = false;
+    }
+  }
+
+  deleteInsulin() async {
+    deleteLoading.value = true;
+    int id = insulinApplication.value!.id!;
+
+    try {
+      await InsulinService.deleteInsulin(id);
+    } catch (e) {
+      print(e);
+      Get.snackbar(
+        "Erro",
+        "Ocorreu um erro inesperado. Tente novamente mais tarde.",
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      deleteLoading.value = false;
     }
   }
 }

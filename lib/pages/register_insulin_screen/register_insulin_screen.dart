@@ -1,11 +1,23 @@
+import 'package:diapets_mobile/components/diapets_icon_button/diapets_icon_button.dart';
 import 'package:diapets_mobile/components/page_nav_bar/page_nav_bar.dart';
 import 'package:diapets_mobile/pages/register_insulin_screen/register_insulin_controller.dart';
 import 'package:diapets_mobile/pages/register_insulin_screen/register_insulin_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'delete_insulin_dialog.dart';
+
 class RegisterInsulinScreen extends StatelessWidget {
   const RegisterInsulinScreen({super.key});
+
+  showDeleteConfirmationDialog(BuildContext context) {
+    RegisterInsulinController registerInsulinController = Get.find();
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const DeleteInsulinDialog();
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +31,15 @@ class RegisterInsulinScreen extends StatelessWidget {
               children: [
                 Obx(
                   () => PageNavbar(
+                    actions: registerInsulinController.isEditing.value
+                        ? [
+                            DiapetsIconButton(
+                              onTap: () =>
+                                  showDeleteConfirmationDialog(context),
+                              icon: const Icon(Icons.delete),
+                            ),
+                          ]
+                        : [],
                     title: registerInsulinController.isEditing.value
                         ? 'Registro'
                         : 'Novo registro',

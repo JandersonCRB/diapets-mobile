@@ -32,4 +32,9 @@ class InsulinService {
       'observations': observations,
     });
   }
+
+  static Future<void> deleteInsulin(int insulinApplicationId) async {
+    Api api = Get.find();
+    await api.delete('/api/v1/insulin_applications/$insulinApplicationId');
+  }
 }

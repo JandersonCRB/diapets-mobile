@@ -1,32 +1,33 @@
 import 'package:flutter/material.dart';
 
-class DiapetsPrimaryButton extends StatelessWidget {
+class DiapetsOutlinedButton extends StatelessWidget {
   final VoidCallback? onPressed;
+  final Color? borderColor;
   final Widget child;
   final bool loading;
-  final Color? borderColor;
-  const DiapetsPrimaryButton({
+
+  const DiapetsOutlinedButton({
     super.key,
     this.onPressed,
-    this.loading = false,
-    this.borderColor,
     required this.child,
+    this.borderColor,
+    this.loading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     Color overridenBorderColor = borderColor ?? Theme.of(context).primaryColor;
-
     return SizedBox(
       height: 48,
       width: double.infinity,
-      child: ElevatedButton(
+      child: OutlinedButton(
         onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: overridenBorderColor,
+        style: OutlinedButton.styleFrom(
+          // backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: const Color(0xFFFCFCFC),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100),
+          side: BorderSide(
+            color: overridenBorderColor,
+            width: 1,
           ),
         ),
         child: loading
