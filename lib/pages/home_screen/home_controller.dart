@@ -10,17 +10,24 @@ class HomeController extends GetxController {
   var onTime = true.obs;
   Rxn<DateTime> nextInsulin = Rxn<DateTime>();
   var timeLeft = '00:00:00'.obs;
+  late Rx<int> petId;
 
   Rxn<InsulinApplication> lastInsulinApplication = Rxn<InsulinApplication>();
 
   Timer? nextInsulinTimer;
+  Timer? autoUpdateTimer;
 
   Future<void> init(int petId) async {
-    updateData(petId);
+    this.petId = petId.obs;
+    await updateData(petId);
+    startCalculationInterval();
+    startAutoUpdate();
   }
 
-  void updateData(int petId) async {
-    loading.value = true;
+  updateData(int petId, {bool triggerLoading = true}) async {
+    if (triggerLoading) {
+      loading.value = true;
+    }
     Api api = Get.find();
     var response = await api.get('/api/v1/pets/$petId/dashboard');
     if (response.data['next_insulin_application'] != null) {
@@ -35,8 +42,14 @@ class HomeController extends GetxController {
         response.data['last_insulin_application'],
       );
     }
-    startCalculationInterval();
+
     loading.value = false;
+  }
+
+  startAutoUpdate() {
+    autoUpdateTimer = Timer.periodic(const Duration(seconds: 30), (timer) {
+      updateData(petId.value, triggerLoading: false);
+    });
   }
 
   void startCalculationInterval() {
@@ -68,6 +81,7 @@ class HomeController extends GetxController {
   @override
   void dispose() {
     nextInsulinTimer?.cancel();
+    autoUpdateTimer?.cancel();
     super.dispose();
   }
 }
