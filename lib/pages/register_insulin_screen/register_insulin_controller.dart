@@ -4,7 +4,7 @@ import 'package:diapets_mobile/services/api.dart';
 import 'package:diapets_mobile/services/insulin_service.dart';
 import 'package:diapets_mobile/services/logger.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RegisterInsulinController extends GetxController {
@@ -18,7 +18,8 @@ class RegisterInsulinController extends GetxController {
 
   int? glucose;
   int? insulinUnits;
-  DateTime? datetime;
+  DateTime? date;
+  TimeOfDay? time;
   String? observation;
   User? responsible;
 
@@ -54,6 +55,13 @@ class RegisterInsulinController extends GetxController {
     loading.value = true;
 
     try {
+      DateTime dateTime = DateTime(
+        date!.year,
+        date!.month,
+        date!.day,
+        time!.hour,
+        time!.minute,
+      );
       if (isEditing.value) {
         await InsulinService.updateInsulin(
           petId,
@@ -61,7 +69,7 @@ class RegisterInsulinController extends GetxController {
           glucose,
           insulinUnits!,
           responsible!.id!,
-          datetime!.toUtc(),
+          dateTime.toUtc(),
           observations: observation,
         );
       } else {
@@ -70,7 +78,7 @@ class RegisterInsulinController extends GetxController {
           glucose,
           insulinUnits!,
           responsible!.id!,
-          datetime!.toUtc(),
+          dateTime.toUtc(),
           observations: observation,
         );
       }

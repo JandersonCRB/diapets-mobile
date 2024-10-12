@@ -1,6 +1,6 @@
 import 'package:diapets_mobile/components/DiapetsPrimaryButton/diapets_primary_button.dart';
 import 'package:diapets_mobile/components/DiapetsTextField/diapets_text_field.dart';
-import 'package:diapets_mobile/components/diapets_datetime_picker_input/diapets_datetime_picker_input.dart';
+import 'package:diapets_mobile/components/diapets_date_picker_input/diapets_date_picker_input.dart';
 import 'package:diapets_mobile/components/diapets_select/diapets_select.dart';
 import 'package:diapets_mobile/components/loading_switch/loading_switch_builder.dart';
 import 'package:diapets_mobile/helpers/form_validator.dart';
@@ -11,6 +11,8 @@ import 'package:diapets_mobile/services/pet_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
+import '../../components/diapets_time_picker_input/diapets_time_picker_input.dart';
 
 class RegisterInsulinForm extends StatefulWidget {
   const RegisterInsulinForm({super.key});
@@ -132,15 +134,49 @@ class _RegisterInsulinFormState extends State<RegisterInsulinForm> {
                   }).toList(),
                 ),
                 const SizedBox(height: 32),
-                DiapetsDatetimePickerInput(
-                    label: "Data e hora",
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime.now(),
-                    initialDate: registerInsulinController
-                        .insulinApplication.value?.applicationTime,
-                    onSaved: (DateTime? value) {
-                      registerInsulinController.datetime = value;
-                    }),
+                Row(
+                  children: [
+                    Expanded(
+                      child: DiapetsDatePickerInput(
+                        label: "Data",
+                        firstDate: DateTime(200),
+                        lastDate: DateTime.now(),
+                        initialDate: registerInsulinController
+                            .insulinApplication.value?.applicationTime,
+                        onSaved: (DateTime? value) {
+                          registerInsulinController.date = value;
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: DiapetsTimePickerInput(
+                        label: "Hora",
+                        initialTime: registerInsulinController
+                                    .insulinApplication
+                                    .value
+                                    ?.applicationTime !=
+                                null
+                            ? TimeOfDay(
+                                hour: registerInsulinController
+                                    .insulinApplication
+                                    .value!
+                                    .applicationTime!
+                                    .hour,
+                                minute: registerInsulinController
+                                    .insulinApplication
+                                    .value!
+                                    .applicationTime!
+                                    .minute,
+                              )
+                            : null,
+                        onSaved: (TimeOfDay? value) {
+                          registerInsulinController.time = value;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 32),
                 DiapetsTextField(
                   onSaved: (String? value) {
