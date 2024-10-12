@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
 
-class DiapetsDatePickerController extends GetxController {
+class DiapetsDatetimePickerController extends GetxController {
   final Rx<DateTime> selectedDate = Rx<DateTime>(DateTime.now());
   final TextEditingController textEditingController = TextEditingController();
 
@@ -43,7 +43,7 @@ class DiapetsDatePickerController extends GetxController {
         .format(pattern: "$dayMonthPattern [às] HH:mm");
   }
 
-  DiapetsDatePickerController() {
+  DiapetsDatetimePickerController() {
     init();
   }
 }

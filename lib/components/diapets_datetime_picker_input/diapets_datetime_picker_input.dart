@@ -1,10 +1,10 @@
-import 'package:diapets_mobile/components/diapets_date_picker_input/diapets_date_picker_controller.dart';
+import 'package:diapets_mobile/components/diapets_datetime_picker_input/diapets_datetime_picker_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../diapets_input_decoration.dart';
 
-class DiapetsDatePickerInput extends StatefulWidget {
+class DiapetsDatetimePickerInput extends StatefulWidget {
   final String label;
   final String placeholder;
   final Widget? suffixIcon;
@@ -16,7 +16,7 @@ class DiapetsDatePickerInput extends StatefulWidget {
   final String? Function(String?)? validator;
   final void Function(DateTime?)? onSaved;
 
-  const DiapetsDatePickerInput({
+  const DiapetsDatetimePickerInput({
     super.key,
     required this.label,
     this.placeholder = '',
@@ -30,21 +30,25 @@ class DiapetsDatePickerInput extends StatefulWidget {
   });
 
   @override
-  State<DiapetsDatePickerInput> createState() => _DiapetsDatePickerInputState();
+  State<DiapetsDatetimePickerInput> createState() =>
+      _DiapetsDatetimePickerInputState();
 }
 
-class _DiapetsDatePickerInputState extends State<DiapetsDatePickerInput> {
+class _DiapetsDatetimePickerInputState
+    extends State<DiapetsDatetimePickerInput> {
   @override
   void initState() {
     super.initState();
-    var diapetsDatePickerController = Get.put(DiapetsDatePickerController());
+    var diapetsDatePickerController =
+        Get.put(DiapetsDatetimePickerController());
     if (widget.initialDate != null) {
       diapetsDatePickerController.selectedDate.value = widget.initialDate!;
     }
   }
 
   void openDatePicker(BuildContext context) {
-    var diapetsDatePickerController = Get.find<DiapetsDatePickerController>();
+    var diapetsDatePickerController =
+        Get.find<DiapetsDatetimePickerController>();
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -112,7 +116,8 @@ class _DiapetsDatePickerInputState extends State<DiapetsDatePickerInput> {
   @override
   Widget build(BuildContext context) {
     var primaryColor = Theme.of(context).colorScheme.primary;
-    var diapetsDatePickerController = Get.find<DiapetsDatePickerController>();
+    var diapetsDatePickerController =
+        Get.find<DiapetsDatetimePickerController>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

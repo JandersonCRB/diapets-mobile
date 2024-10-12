@@ -1,6 +1,6 @@
 import 'package:diapets_mobile/components/DiapetsPrimaryButton/diapets_primary_button.dart';
 import 'package:diapets_mobile/components/DiapetsTextField/diapets_text_field.dart';
-import 'package:diapets_mobile/components/diapets_date_picker_input/diapets_date_picker_input.dart';
+import 'package:diapets_mobile/components/diapets_datetime_picker_input/diapets_datetime_picker_input.dart';
 import 'package:diapets_mobile/components/diapets_select/diapets_select.dart';
 import 'package:diapets_mobile/components/loading_switch/loading_switch_builder.dart';
 import 'package:diapets_mobile/helpers/form_validator.dart';
@@ -132,7 +132,7 @@ class _RegisterInsulinFormState extends State<RegisterInsulinForm> {
                   }).toList(),
                 ),
                 const SizedBox(height: 32),
-                DiapetsDatePickerInput(
+                DiapetsDatetimePickerInput(
                     label: "Data e hora",
                     firstDate: DateTime(2000),
                     lastDate: DateTime.now(),
