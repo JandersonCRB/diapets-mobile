@@ -70,13 +70,17 @@ class _RegisterInsulinFormState extends State<RegisterInsulinForm> {
                     Expanded(
                       child: DiapetsTextField(
                         initialValue: registerInsulinController
-                            .insulinApplication.value?.glucoseLevel
-                            .toString(),
+                                .insulinApplication.value?.glucoseLevel
+                                ?.toString() ??
+                            '',
                         label: "Glicose",
                         placeholder: "mg/dL",
-                        validator: FormValidator().required().build(),
+                        // validator: FormValidator().required().build(),
                         onSaved: (String? value) {
-                          registerInsulinController.glucose = int.parse(value!);
+                          if (value != null && value.isNotEmpty == true) {
+                            registerInsulinController.glucose =
+                                int.parse(value);
+                          }
                         },
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,

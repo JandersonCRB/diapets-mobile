@@ -58,7 +58,7 @@ class RegisterInsulinController extends GetxController {
         await InsulinService.updateInsulin(
           petId,
           insulinApplication.value!.id!,
-          glucose!,
+          glucose,
           insulinUnits!,
           responsible!.id!,
           datetime!.toUtc(),
@@ -67,7 +67,7 @@ class RegisterInsulinController extends GetxController {
       } else {
         await InsulinService.registerInsulin(
           petId,
-          glucose!,
+          glucose,
           insulinUnits!,
           responsible!.id!,
           datetime!.toUtc(),

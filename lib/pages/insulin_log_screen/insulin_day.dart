@@ -45,6 +45,15 @@ class InsulinCard extends StatelessWidget {
     });
   }
 
+  String buildRowText(int units, int? glucoseLevel) {
+    List<String> texts = [];
+    texts.add("$units unidades");
+    if (glucoseLevel != null) {
+      texts.add("$glucoseLevel glicose");
+    }
+    return texts.join(" | ");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -83,7 +92,8 @@ class InsulinCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                "${insulinApplication.insulinUnits!} unidades | ${insulinApplication.glucoseLevel} glicose",
+                buildRowText(insulinApplication.insulinUnits!,
+                    insulinApplication.glucoseLevel),
                 style: const TextStyle(
                   color: Color(0xFF888D92),
                   fontSize: 14,
