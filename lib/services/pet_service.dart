@@ -1,4 +1,5 @@
 import 'package:diapets_mobile/models/pet.dart';
+import 'package:diapets_mobile/services/logger.dart';
 import 'package:get/get.dart';
 
 import 'api.dart';
@@ -25,7 +26,7 @@ class PetService extends GetxService {
           response.data.map<Pet>((pet) => Pet.fromJson(pet)).toList();
       return pets;
     } catch (e) {
-      print(e);
+      logger.e(e);
       rethrow;
     }
   }

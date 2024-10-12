@@ -37,7 +37,7 @@ class DateService {
   }) {
     late String dayMonthPattern;
     var today = DateTime.now();
-    print("aaa");
+
     if (selectedDate.day == today.day &&
         selectedDate.month == today.month &&
         selectedDate.year == today.year) {
@@ -55,7 +55,6 @@ class DateService {
         selectedDate.year == today.year) {
       dayMonthPattern = "[Anteontem]";
     } else if (selectedDate.year == today.year && showLaterYears) {
-      print("aqui");
       dayMonthPattern = customPattern;
     } else {
       dayMonthPattern = customDayMonthPattern;

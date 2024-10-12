@@ -1,5 +1,6 @@
 import 'package:diapets_mobile/services/api.dart';
 import 'package:diapets_mobile/services/auth_service.dart';
+import 'package:diapets_mobile/services/logger.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 
@@ -34,7 +35,7 @@ class PushNotificationsService extends GetxController {
       try {
         await api.post('/api/v1/users/push_token', data: {'token': token});
       } catch (e) {
-        print(e);
+        logger.e(e);
       }
     }
   }

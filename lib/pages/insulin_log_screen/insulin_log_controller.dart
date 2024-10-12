@@ -1,6 +1,7 @@
 import 'package:diapets_mobile/models/insulin_application.dart';
 import 'package:diapets_mobile/models/insulin_application_filters.dart';
 import 'package:diapets_mobile/services/api.dart';
+import 'package:diapets_mobile/services/logger.dart';
 import 'package:diapets_mobile/services/pet_service.dart';
 import 'package:get/get.dart';
 
@@ -39,10 +40,9 @@ class InsulinLogController extends GetxController {
           "/api/v1/pets/${petService.selectedPet.value!.id}/insulin_applications/filters");
       insulinApplicationFilters.value =
           InsulinApplicationFilters.fromJson(response.data);
-      print(insulinApplicationFilters.toJson());
     } catch (e) {
       Get.snackbar('Erro', 'Erro ao carregar filtros');
-      print(e);
+      logger.e(e);
     } finally {
       loadingFilters.value = false;
     }

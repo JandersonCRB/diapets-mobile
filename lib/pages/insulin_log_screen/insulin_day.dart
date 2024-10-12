@@ -35,13 +35,11 @@ class InsulinCard extends StatelessWidget {
   });
 
   openRegisterInsulin() {
-    print("opening insulin");
     InsulinLogController insulinLogController = Get.find();
     Get.toNamed(
       '/register_insulin',
       arguments: {'id': insulinApplication.id},
     )?.then((_) async {
-      print("ahoy");
       await insulinLogController.getInsulinFilters();
       await insulinLogController.getInsulinLog();
     });

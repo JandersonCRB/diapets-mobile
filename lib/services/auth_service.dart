@@ -1,5 +1,6 @@
 import 'package:diapets_mobile/models/user.dart';
 import 'package:diapets_mobile/services/api.dart';
+import 'package:diapets_mobile/services/logger.dart';
 import 'package:diapets_mobile/services/push_notifications_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -58,7 +59,7 @@ class AuthService extends GetxController {
       var response = await api.get('/api/v1/auth/user');
       currentUser = User.fromJson(response.data);
     } catch (e) {
-      print(e);
+      logger.e(e);
     }
   }
 }

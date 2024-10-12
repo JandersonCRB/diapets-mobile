@@ -2,6 +2,7 @@ import 'package:diapets_mobile/models/insulin_application.dart';
 import 'package:diapets_mobile/models/user.dart';
 import 'package:diapets_mobile/services/api.dart';
 import 'package:diapets_mobile/services/insulin_service.dart';
+import 'package:diapets_mobile/services/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -76,7 +77,7 @@ class RegisterInsulinController extends GetxController {
 
       Get.back();
     } catch (e) {
-      print(e);
+      logger.e(e);
       Get.snackbar(
         "Erro",
         "Ocorreu um erro inesperado. Tente novamente mais tarde.",
@@ -94,7 +95,7 @@ class RegisterInsulinController extends GetxController {
     try {
       await InsulinService.deleteInsulin(id);
     } catch (e) {
-      print(e);
+      logger.e(e);
       Get.snackbar(
         "Erro",
         "Ocorreu um erro inesperado. Tente novamente mais tarde.",

@@ -6,6 +6,7 @@ import 'package:diapets_mobile/pages/register_insulin_screen/register_insulin_co
 import 'package:diapets_mobile/pages/register_insulin_screen/register_insulin_screen.dart';
 import 'package:diapets_mobile/services/api.dart';
 import 'package:diapets_mobile/services/auth_service.dart';
+import 'package:diapets_mobile/services/logger.dart';
 import 'package:diapets_mobile/services/push_notifications_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -30,7 +31,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
 
-  print("Handling a background message: ${message.messageId}");
+  logger.d("Handling a background message: ${message.messageId}");
 }
 
 Future<void> initServices() async {

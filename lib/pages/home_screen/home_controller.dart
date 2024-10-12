@@ -37,7 +37,6 @@ class HomeController extends GetxController {
     }
 
     if (response.data['last_insulin_application'] != null) {
-      print(response.data['last_insulin_application']);
       lastInsulinApplication.value = InsulinApplication.fromJson(
         response.data['last_insulin_application'],
       );

@@ -1,4 +1,5 @@
 import 'package:diapets_mobile/services/auth_service.dart';
+import 'package:diapets_mobile/services/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -18,7 +19,7 @@ class Api extends DioForNative {
           return handler.next(options); //continue
         },
         onError: (DioException e, handler) {
-          print("Error: ${e.response?.data}");
+          logger.e("Error: ${e.response?.data}");
           if (e.response?.statusCode == 401 &&
               e.response?.data['error_code'] == 'INVALID_TOKEN') {
             AuthService authService = Get.find();
