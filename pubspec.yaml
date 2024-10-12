@@ -43,6 +43,7 @@ dependencies:
   timelines: ^0.1.0
   firebase_messaging: ^14.7.20
   logger: ^2.4.0
+  flutter_native_splash: ^2.4.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -50,6 +51,15 @@ dependencies:
   cupertino_icons: ^1.0.6
   firebase_core: ^2.27.1
 
+flutter_native_splash:
+  color: "#1f2630"
+  image: assets/splash_icon.png
+  android: true
+  ios: false
+
+  android_12:
+    color: "#1f2630"
+    image: assets/splash_icon.png
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -80,6 +90,7 @@ flutter:
     - assets/images/time_fly_red.svg
     - assets/images/calendar_insulin.svg
     - assets/icons/injection.svg
+    - assets/splash_icon.png
     - .env.local
 
   # An image asset can refer to one or more resolution-specific "variants", see
