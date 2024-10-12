@@ -57,7 +57,7 @@ class _DiapetsDatePickerInputState extends State<DiapetsDatePickerInput> {
             colorScheme: ColorScheme.dark(
               primary: Theme.of(context).colorScheme.primary,
               onPrimary: Theme.of(context).colorScheme.onPrimary,
-              surface: Theme.of(context).colorScheme.background,
+              surface: Theme.of(context).colorScheme.surface,
               onSurface: Colors.white,
             ),
           ),
@@ -81,7 +81,7 @@ class _DiapetsDatePickerInputState extends State<DiapetsDatePickerInput> {
                 colorScheme: ColorScheme.dark(
                   primary: Theme.of(context).colorScheme.primary,
                   onPrimary: Theme.of(context).colorScheme.onPrimary,
-                  surface: Theme.of(context).colorScheme.background,
+                  surface: Theme.of(context).colorScheme.surface,
                   onSurface: Colors.white,
                 ),
               ),

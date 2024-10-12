@@ -99,9 +99,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFFEB7C3C),
           primary: const Color(0xFFEB7C3C),
-          background: const Color(0xFF1F2630),
-          surface: const Color(0xFFFCFCFC),
-          error: Color(0xFFEF3D36),
+          surface: const Color(0xFF1F2630),
+          error: const Color(0xFFEF3D36),
         ),
         dialogTheme: const DialogTheme(
           backgroundColor: Color(0xFF2E3641),
