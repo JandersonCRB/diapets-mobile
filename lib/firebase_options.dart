@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -30,10 +27,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -65,10 +59,30 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCoNkPywuJ-zTZa95ZHOibvgiN71Hs0efw',
-    appId: '1:914226878912:ios:839087b4aacb8d62fb5025',
+    appId: '1:914226878912:ios:16b3b5d4fecfd8d4fb5025',
     messagingSenderId: '914226878912',
     projectId: 'diapets',
     storageBucket: 'diapets.appspot.com',
-    iosBundleId: 'com.example.diapetsMobile.RunnerTests',
+    iosBundleId: 'com.example.diapetsMobile',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyAHO1Dw329T6pjl90R40t92FWuHmBRtBe4',
+    appId: '1:914226878912:web:fd544e4ec13ae61dfb5025',
+    messagingSenderId: '914226878912',
+    projectId: 'diapets',
+    authDomain: 'diapets.firebaseapp.com',
+    storageBucket: 'diapets.appspot.com',
+    measurementId: 'G-5QG288B5ZQ',
+  );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAHO1Dw329T6pjl90R40t92FWuHmBRtBe4',
+    appId: '1:914226878912:web:fd544e4ec13ae61dfb5025',
+    messagingSenderId: '914226878912',
+    projectId: 'diapets',
+    authDomain: 'diapets.firebaseapp.com',
+    storageBucket: 'diapets.appspot.com',
+    measurementId: 'G-5QG288B5ZQ',
   );
 }

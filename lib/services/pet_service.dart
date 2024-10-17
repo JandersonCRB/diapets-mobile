@@ -21,7 +21,7 @@ class PetService extends GetxService {
   Future<List<Pet>> listPets() async {
     try {
       Api api = Get.find();
-      var response = await api.get('/api/v1/pets');
+      var response = await api.dio.get('/api/v1/pets');
       List<Pet> pets =
           response.data.map<Pet>((pet) => Pet.fromJson(pet)).toList();
       return pets;

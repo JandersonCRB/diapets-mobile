@@ -33,7 +33,7 @@ class PushNotificationsService extends GetxController {
     var authService = Get.find<AuthService>();
     if (authService.isSignedIn) {
       try {
-        await api.post('/api/v1/users/push_token', data: {'token': token});
+        await api.dio.post('/api/v1/users/push_token', data: {'token': token});
       } catch (e) {
         logger.e(e);
       }

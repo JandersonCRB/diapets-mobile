@@ -36,7 +36,7 @@ class InsulinLogController extends GetxController {
     PetService petService = Get.find<PetService>();
     loadingFilters.value = true;
     try {
-      var response = await api.get(
+      var response = await api.dio.get(
           "/api/v1/pets/${petService.selectedPet.value!.id}/insulin_applications/filters");
       insulinApplicationFilters.value =
           InsulinApplicationFilters.fromJson(response.data);
@@ -51,7 +51,7 @@ class InsulinLogController extends GetxController {
   getInsulinLog() async {
     Api api = Get.find<Api>();
     PetService petService = Get.find<PetService>();
-    var response = await api.get(
+    var response = await api.dio.get(
         '/api/v1/pets/${petService.selectedPet.value!.id}/insulin_applications');
 
     monthList.clear();

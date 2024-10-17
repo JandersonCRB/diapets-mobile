@@ -56,7 +56,7 @@ class AuthService extends GetxController {
   getCurrentUser() async {
     Api api = Get.find();
     try {
-      var response = await api.get('/api/v1/auth/user');
+      var response = await api.dio.get('/api/v1/auth/user');
       currentUser = User.fromJson(response.data);
     } catch (e) {
       logger.e(e);

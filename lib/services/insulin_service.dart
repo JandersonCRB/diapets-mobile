@@ -6,7 +6,7 @@ class InsulinService {
       int insulinUnits, int responsibleId, DateTime applicationTime,
       {String? observations}) async {
     Api api = Get.find();
-    await api.post('/api/v1/pets/$petId/insulin_applications', data: {
+    await api.dio.post('/api/v1/pets/$petId/insulin_applications', data: {
       'glucose_level': glucoseLevel,
       'insulin_units': insulinUnits,
       'application_time': applicationTime.toIso8601String(),
@@ -25,7 +25,8 @@ class InsulinService {
       DateTime applicationTime,
       {String? observations}) async {
     Api api = Get.find();
-    await api.put('/api/v1/insulin_applications/$insulinApplicationId', data: {
+    await api.dio
+        .put('/api/v1/insulin_applications/$insulinApplicationId', data: {
       'insulin_units': insulinUnits,
       'application_time': applicationTime.toIso8601String(),
       'responsible_id': responsibleId,
@@ -36,6 +37,6 @@ class InsulinService {
 
   static Future<void> deleteInsulin(int insulinApplicationId) async {
     Api api = Get.find();
-    await api.delete('/api/v1/insulin_applications/$insulinApplicationId');
+    await api.dio.delete('/api/v1/insulin_applications/$insulinApplicationId');
   }
 }

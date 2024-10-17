@@ -38,7 +38,7 @@ class RegisterInsulinController extends GetxController {
 
     Api api = Get.find();
     try {
-      var response = await api.get('/api/v1/insulin_applications/$id');
+      var response = await api.dio.get('/api/v1/insulin_applications/$id');
       insulinApplication.value = InsulinApplication.fromJson(response.data);
     } on DioException {
       Get.snackbar(

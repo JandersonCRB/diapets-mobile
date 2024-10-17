@@ -29,7 +29,7 @@ class HomeController extends GetxController {
       loading.value = true;
     }
     Api api = Get.find();
-    var response = await api.get('/api/v1/pets/$petId/dashboard');
+    var response = await api.dio.get('/api/v1/pets/$petId/dashboard');
     if (response.data['next_insulin_application'] != null) {
       nextInsulin.value = DateFormat("yyyy-MM-ddTHH:mm:ss")
           .parse(response.data['next_insulin_application'], true)

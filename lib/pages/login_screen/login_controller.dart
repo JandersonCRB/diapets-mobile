@@ -21,7 +21,7 @@ class LoginController extends GetxController {
   void login() {
     Api api = Get.find<Api>();
     submitting.value = true;
-    api.post('/api/v1/auth/login', data: {
+    api.dio.post('/api/v1/auth/login', data: {
       'email': email,
       'password': password,
     }).then((response) {

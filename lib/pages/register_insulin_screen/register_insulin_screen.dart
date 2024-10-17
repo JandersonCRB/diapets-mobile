@@ -11,7 +11,6 @@ class RegisterInsulinScreen extends StatelessWidget {
   const RegisterInsulinScreen({super.key});
 
   showDeleteConfirmationDialog(BuildContext context) {
-    RegisterInsulinController registerInsulinController = Get.find();
     showDialog(
         context: context,
         builder: (context) {
@@ -36,7 +35,10 @@ class RegisterInsulinScreen extends StatelessWidget {
                             DiapetsIconButton(
                               onTap: () =>
                                   showDeleteConfirmationDialog(context),
-                              icon: const Icon(Icons.delete),
+                              icon: const Icon(
+                                Icons.delete_outline,
+                                color: Colors.red,
+                              ),
                             ),
                           ]
                         : [],
