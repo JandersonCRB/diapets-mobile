@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var authService = Get.find<AuthService>();
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Diapets',
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

@@ -1,11 +1,11 @@
 {
-    "name": "diapets_mobile",
-    "short_name": "diapets_mobile",
+    "name": "Diapets",
+    "short_name": "diapets",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Diapets app",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
