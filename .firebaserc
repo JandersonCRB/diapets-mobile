@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "diapets": "diapets",
+    "default": "diapets"
+  },
+  "targets": {},
+  "etags": {}
+}
