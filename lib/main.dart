@@ -35,7 +35,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> initServices() async {
-  await dotenv.load(fileName: ".env.local");
+  await dotenv.load(fileName: "dotenv");
   Get.put(Api());
   await GetStorage.init();
   var authService = Get.put(AuthService());
